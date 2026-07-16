@@ -1,0 +1,119 @@
+.about-section {
+  padding: 48px 24px;
+  max-width: 1400px;
+  margin: 0 auto;
+  border-top: 1px solid var(--border);
+}
+
+.about-grid {
+  display: grid;
+  grid-template-columns: 160px 1fr;
+  grid-template-rows: auto auto;
+  gap: 1px;
+  background: var(--border-dim);
+  border: 1px solid var(--border);
+}
+
+/* ASCII whoami */
+.about-ascii {
+  grid-column: 1;
+  grid-row: 1;
+  padding: 20px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.ascii-header {
+  font-size: 0.6rem;
+  letter-spacing: 0.18em;
+  color: var(--neon);
+  text-transform: uppercase;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 8px;
+}
+
+.ascii-art {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  line-height: 1.5;
+  color: var(--neon);
+  text-shadow: 0 0 8px rgba(57,255,183,0.35);
+  white-space: pre;
+}
+
+/* Intro text */
+.about-intro {
+  grid-column: 2;
+  grid-row: 1;
+  padding: 24px 28px;
+  border-left: 1px solid var(--border-dim);
+}
+
+.about-greeting {
+  font-family: var(--font-sans);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--white-90);
+  margin-bottom: 14px;
+  letter-spacing: 0.01em;
+}
+
+.about-body {
+  font-size: 0.72rem;
+  line-height: 1.8;
+  color: var(--white-60);
+  margin-bottom: 10px;
+  letter-spacing: 0.03em;
+}
+
+.about-more-link {
+  display: inline-flex;
+  margin-top: 16px;
+  font-size: 0.65rem;
+  color: var(--neon);
+}
+
+/* Stats row */
+.about-stats {
+  grid-column: 1 / -1;
+  grid-row: 2;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  border-top: 1px solid var(--border-dim);
+}
+
+.about-stat-col {
+  padding: 16px 20px;
+  border-right: 1px solid var(--border-dim);
+  transition: background 0.2s;
+}
+.about-stat-col:last-child { border-right: none; }
+.about-stat-col:hover { background: var(--neon-glow); }
+
+.stat-label {
+  font-size: 0.58rem;
+  letter-spacing: 0.22em;
+  color: var(--neon);
+  text-transform: uppercase;
+  margin-bottom: 6px;
+  font-weight: 600;
+}
+
+.stat-value {
+  font-size: 0.68rem;
+  line-height: 1.6;
+  color: var(--white-60);
+  letter-spacing: 0.03em;
+}
+
+@media (max-width: 768px) {
+  .about-grid {
+    grid-template-columns: 1fr;
+  }
+  .about-ascii { grid-column: 1; }
+  .about-intro { grid-column: 1; border-left: none; border-top: 1px solid var(--border-dim); }
+  .about-stats { grid-template-columns: 1fr; }
+  .about-stat-col { border-right: none; border-bottom: 1px solid var(--border-dim); }
+}

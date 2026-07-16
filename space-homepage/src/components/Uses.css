@@ -1,0 +1,298 @@
+.uses-section {
+  padding: 48px 24px;
+  max-width: 1400px;
+  margin: 0 auto;
+  border-top: 1px solid var(--border);
+}
+
+/* ── Uses grid layout ──────────────────────── */
+.uses-grid {
+  display: grid;
+  grid-template-columns: 200px 1fr 1fr;
+  grid-template-rows: auto auto;
+  gap: 1px;
+  background: var(--border-dim);
+  border: 1px solid var(--border);
+}
+
+/* Specs */
+.uses-specs {
+  grid-column: 1;
+  grid-row: 1 / 3;
+  padding: 20px 16px;
+}
+
+.uses-specs-header,
+.uses-sub-header {
+  font-size: 0.58rem;
+  letter-spacing: 0.22em;
+  color: var(--white-30);
+  text-transform: uppercase;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 8px;
+  margin-bottom: 14px;
+  font-weight: 600;
+}
+
+.specs-list { display: flex; flex-direction: column; gap: 8px; }
+
+.spec-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 0.66rem;
+  letter-spacing: 0.06em;
+}
+.spec-label {
+  color: var(--white-30);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-size: 0.58rem;
+  white-space: nowrap;
+}
+.spec-value {
+  color: var(--white-90);
+  text-align: right;
+}
+
+/* Desk visual */
+.uses-desk {
+  grid-column: 2;
+  grid-row: 1;
+  min-height: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  overflow: hidden;
+  position: relative;
+  background: #050505;
+  border-left: 1px solid var(--border-dim);
+}
+
+.desk-inner {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+
+.desk-caption {
+  font-size: 0.55rem;
+  letter-spacing: 0.2em;
+  color: var(--white-30);
+  text-transform: uppercase;
+  padding: 8px 14px;
+  border-top: 1px solid var(--border);
+  background: var(--surface);
+}
+
+/* Desk wireframe visual */
+.desk-visual {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  max-width: 240px;
+}
+
+.dv-monitor {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+.dv-screen {
+  width: 100%;
+  border: 1px solid var(--border);
+  padding: 10px;
+  background: #040404;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  border-radius: 2px;
+}
+.dv-code-line {
+  height: 3px;
+  background: var(--border);
+  border-radius: 2px;
+}
+.dv-code-line.neon {
+  background: rgba(57,255,183,0.4);
+  box-shadow: 0 0 6px rgba(57,255,183,0.2);
+}
+.dv-stand {
+  width: 3px;
+  height: 16px;
+  background: var(--border);
+  margin: 0 auto;
+}
+.dv-base {
+  width: 60px;
+  height: 3px;
+  background: var(--border);
+  border-radius: 1px;
+}
+.dv-kb {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 3px;
+  width: 80%;
+}
+.dv-key {
+  height: 8px;
+  background: var(--black-light);
+  border: 1px solid var(--border);
+  border-radius: 1px;
+}
+.dv-mouse {
+  width: 18px;
+  height: 26px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  position: relative;
+  margin-left: auto;
+  margin-right: 16px;
+}
+.dv-mouse::after {
+  content: '';
+  position: absolute;
+  top: 5px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 1px;
+  height: 10px;
+  background: var(--border);
+}
+
+/* Terminal */
+.uses-terminal {
+  grid-column: 3;
+  grid-row: 1;
+  border-left: 1px solid var(--border-dim);
+  display: flex;
+  flex-direction: column;
+  max-height: 260px;
+}
+
+.terminal-titlebar {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 10px;
+  background: #0d0d0d;
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.term-btn {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+}
+.term-btn-red    { background: #ff5f57; }
+.term-btn-yellow { background: #ffbd2e; }
+.term-btn-green  { background: #28ca41; }
+
+.term-title {
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  color: var(--white-30);
+  margin-left: 8px;
+}
+
+.term-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  font-size: 0.68rem;
+  background: #020202;
+}
+
+.term-line { display: flex; align-items: baseline; gap: 4px; flex-wrap: wrap; }
+.term-prompt { color: var(--neon); font-weight: 600; white-space: nowrap; }
+.term-cmd { color: var(--white-90); }
+.term-output { color: var(--white-60); padding-left: 12px; }
+.term-cursor {
+  color: var(--neon);
+  font-size: 0.75rem;
+  animation: blink-cursor 1s step-end infinite;
+}
+
+.term-table { padding-left: 8px; display: flex; flex-direction: column; gap: 4px; }
+.term-table-row { display: flex; gap: 12px; }
+.term-key {
+  color: var(--white-30);
+  min-width: 130px;
+  font-size: 0.64rem;
+}
+.term-val { color: var(--white-90); font-size: 0.64rem; }
+
+/* Software */
+.uses-software {
+  grid-column: 2;
+  grid-row: 2;
+  padding: 16px;
+  border-top: 1px solid var(--border-dim);
+  border-left: 1px solid var(--border-dim);
+}
+.sw-icons { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
+.sw-chip {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--black-light);
+  border: 1px solid var(--border);
+  font-size: 0.58rem;
+  letter-spacing: 0.08em;
+  color: var(--white-60);
+  font-weight: 700;
+  cursor: default;
+  transition: border-color 0.2s, color 0.2s;
+}
+.sw-chip:hover { border-color: rgba(57,255,183,0.3); color: var(--neon); }
+
+/* Hardware */
+.uses-hardware {
+  grid-column: 3;
+  grid-row: 2;
+  padding: 16px;
+  border-top: 1px solid var(--border-dim);
+  border-left: 1px solid var(--border-dim);
+}
+.hw-list { display: flex; flex-direction: column; gap: 6px; margin-top: 4px; }
+.hw-item {
+  font-size: 0.68rem;
+  color: var(--white-60);
+  display: flex;
+  gap: 8px;
+  letter-spacing: 0.04em;
+}
+.hw-dot { color: var(--neon); font-size: 0.6rem; }
+
+@media (max-width: 900px) {
+  .uses-grid {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
+  }
+  .uses-specs { grid-column: 1 / -1; grid-row: auto; }
+  .uses-desk  { grid-column: 1; }
+  .uses-terminal { grid-column: 2; }
+  .uses-software { grid-column: 1; }
+  .uses-hardware { grid-column: 2; }
+}
+
+@media (max-width: 600px) {
+  .uses-grid { grid-template-columns: 1fr; }
+  .uses-terminal { max-height: 220px; }
+  .uses-desk, .uses-terminal, .uses-software, .uses-hardware {
+    grid-column: 1;
+    border-left: none;
+  }
+}

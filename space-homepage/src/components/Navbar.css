@@ -1,0 +1,125 @@
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--nav-h);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  background: rgba(0,0,0,0.92);
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(16px);
+}
+
+.nav-logo {
+  font-family: var(--font-display);
+  font-size: 1.55rem;
+  letter-spacing: 0.06em;
+  color: var(--white);
+  text-decoration: none;
+  user-select: none;
+  transition: color 0.2s;
+}
+.nav-logo:hover { color: var(--neon); }
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  list-style: none;
+  gap: 0;
+}
+
+.nav-link {
+  display: inline-block;
+  padding: 6px 12px;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 400;
+  letter-spacing: 0.14em;
+  color: var(--white-30);
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: color 0.2s;
+  position: relative;
+}
+
+.nav-link::before {
+  content: '//_';
+  color: rgba(57,255,183,0.35);
+  margin-right: 2px;
+  font-size: 0.62rem;
+  transition: color 0.2s;
+}
+
+.nav-link:hover,
+.nav-link.active {
+  color: var(--white-90);
+}
+.nav-link.active::before,
+.nav-link:hover::before {
+  color: var(--neon);
+}
+
+.nav-link.active::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 12px;
+  right: 12px;
+  height: 1px;
+  background: var(--neon);
+  box-shadow: 0 0 6px var(--neon);
+}
+
+.nav-status {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 1px;
+}
+
+.nav-status-label {
+  font-size: 0.55rem;
+  letter-spacing: 0.22em;
+  color: var(--white-30);
+  text-transform: uppercase;
+}
+
+.nav-status-value {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.65rem;
+  letter-spacing: 0.14em;
+  color: var(--neon);
+  font-weight: 700;
+}
+
+.status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--neon);
+  box-shadow: 0 0 6px var(--neon);
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+
+.nav-clock {
+  font-size: 0.58rem;
+  letter-spacing: 0.1em;
+  color: var(--white-30);
+  font-family: var(--font-mono);
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.35; }
+}
+
+@media (max-width: 900px) {
+  .nav-links { display: none; }
+  .nav-status { display: none; }
+}

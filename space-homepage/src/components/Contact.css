@@ -1,0 +1,165 @@
+.contact-section {
+  padding: 48px 24px 80px;
+  max-width: 1400px;
+  margin: 0 auto;
+  border-top: 1px solid var(--border);
+}
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--border-dim);
+  border: 1px solid var(--border);
+}
+
+/* ── Links column ──────────────────────────── */
+.contact-links-col {
+  padding: 28px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.contact-sub {
+  font-size: 0.58rem;
+  letter-spacing: 0.24em;
+  color: var(--white-30);
+  text-transform: uppercase;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 10px;
+}
+
+.contact-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.contact-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 10px;
+  text-decoration: none;
+  border: 1px solid transparent;
+  transition: border-color 0.2s, background 0.2s;
+  cursor: pointer;
+}
+.contact-item:hover {
+  border-color: var(--border);
+  background: var(--black-light);
+}
+.contact-item:hover .contact-arrow { color: var(--neon); }
+
+.contact-icon {
+  font-size: 1rem;
+  color: var(--white-30);
+  width: 24px;
+  text-align: center;
+}
+
+.contact-item-text {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.contact-item-label {
+  font-size: 0.58rem;
+  letter-spacing: 0.2em;
+  color: var(--white-30);
+  text-transform: uppercase;
+  font-weight: 600;
+}
+.contact-item-value {
+  font-size: 0.72rem;
+  color: var(--white-90);
+  letter-spacing: 0.04em;
+  transition: color 0.2s;
+}
+.contact-item:hover .contact-item-value { color: var(--neon); }
+
+.contact-arrow {
+  font-size: 0.8rem;
+  color: var(--white-30);
+  transition: color 0.2s;
+}
+
+.contact-cta {
+  align-self: flex-start;
+  margin-top: 8px;
+}
+
+/* ── Orbit visual ─────────────────────────── */
+.contact-visual {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 280px;
+  background: #030303;
+  border-left: 1px solid var(--border-dim);
+  overflow: hidden;
+}
+
+.orbit-wrap {
+  position: relative;
+  width: 220px;
+  height: 220px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.orbit-planet {
+  position: absolute;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, var(--neon), #00b37a);
+  box-shadow: 0 0 20px rgba(57,255,183,0.4), 0 0 40px rgba(57,255,183,0.1);
+  z-index: 2;
+}
+
+.orbit {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  animation: orbit-spin linear infinite;
+}
+
+.orbit-1 { width: 100px; height: 100px; animation-duration: 6s; }
+.orbit-2 { width: 150px; height: 150px; animation-duration: 10s; animation-direction: reverse; }
+.orbit-3 { width: 200px; height: 200px; animation-duration: 16s; }
+
+@keyframes orbit-spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+.orbit-dot {
+  position: absolute;
+  top: -4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--white-30);
+  border: 1px solid var(--border);
+}
+
+.orbit-label {
+  position: absolute;
+  font-size: 0.52rem;
+  letter-spacing: 0.16em;
+  color: var(--white-30);
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+@media (max-width: 768px) {
+  .contact-grid { grid-template-columns: 1fr; }
+  .contact-visual { min-height: 200px; border-left: none; border-top: 1px solid var(--border-dim); }
+}
