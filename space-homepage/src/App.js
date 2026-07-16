@@ -12,10 +12,14 @@ import Contact          from './components/Contact';
 import Footer           from './components/Footer';
 import AdminLogin       from './admin/AdminLogin';
 import AdminDashboard   from './admin/AdminDashboard';
+import BootOverlay      from './components/BootOverlay';
 
 function Portfolio() {
+  const [booted, setBooted] = useState(false);
+
   return (
     <>
+      {!booted && <BootOverlay onComplete={() => setBooted(true)} />}
       <canvas id="star-canvas" aria-hidden="true" />
       <div className="bg-texture" aria-hidden="true" />
       <StarCanvas />

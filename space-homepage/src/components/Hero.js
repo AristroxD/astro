@@ -1,68 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import './Hero.css';
 
-const BOOT_LINES = [
-  '> INITIALIZING SYSTEM...',
-  '> LOADING MODULES...',
-  '> CONNECTING TO ORBIT...',
-  '> WELCOME, EXPLORER.',
-];
-
-function BootSequence({ onComplete }) {
-  const [visible, setVisible] = useState([]);
-  const [done, setDone] = useState(false);
-
-  useEffect(() => {
-    let i = 0;
-    const next = () => {
-      if (i < BOOT_LINES.length) {
-        setVisible(prev => [...prev, BOOT_LINES[i]]);
-        i++;
-        setTimeout(next, 280);
-      } else {
-        setTimeout(() => setDone(true), 200);
-        setTimeout(onComplete, 600);
-      }
-    };
-    const id = setTimeout(next, 300);
-    return () => clearTimeout(id);
-  }, [onComplete]);
-
-  return (
-    <div className={`boot-seq ${done ? 'boot-done' : ''}`} aria-live="polite">
-      {visible.map((line, idx) => (
-        <div
-          key={idx}
-          className={`boot-line ${idx === BOOT_LINES.length - 1 ? 'boot-line-final' : ''}`}
-          style={{ animationDelay: `${idx * 0.05}s` }}
-        >
-          {line}
-        </div>
-      ))}
-    </div>
-  );
-}
-
 export default function Hero() {
-  const [showContent, setShowContent] = useState(false);
-
-  const handleBootComplete = () => {
-    setTimeout(() => setShowContent(true), 200);
-  };
-
   return (
     <section id="home" className="hero" aria-label="Hero section">
       {/* Boot sequence col */}
       <div className="hero-boot-col">
-        <BootSequence onComplete={handleBootComplete} />
-        <div className="hero-online-badge" style={{ opacity: showContent ? 1 : 0, transition: 'opacity 0.6s 0.5s' }}>
+        <div className="boot-seq boot-done" aria-hidden="true">
+          <div className="boot-line">&gt; INITIALIZING SYSTEM...</div>
+          <div className="boot-line">&gt; LOADING MODULES...</div>
+          <div className="boot-line">&gt; CONNECTING TO ORBIT...</div>
+          <div className="boot-line boot-line-final">&gt; WELCOME, EXPLORER.</div>
+        </div>
+        <div className="hero-online-badge">
           <span className="hero-online-dot" aria-hidden="true" />
           SYSTEM ONLINE →
         </div>
       </div>
 
       {/* Center: Identity block */}
-      <div className={`hero-identity ${showContent ? 'hero-identity--visible' : ''}`}>
+      <div className="hero-identity hero-identity--visible">
         <div className="hero-sub-label">&#47;&#47; DEBAJIT DUTTA</div>
         <h1 className="hero-name" aria-label="ARISTRO">
           ARISTRO<span className="hero-dot" aria-hidden="true">.</span>
@@ -78,7 +35,7 @@ export default function Hero() {
       </div>
 
       {/* Right panel: Telemetry */}
-      <div className={`hero-telemetry ${showContent ? 'hero-telemetry--visible' : ''}`} aria-label="Telemetry panel">
+      <div className="hero-telemetry hero-telemetry--visible" aria-label="Telemetry panel">
         <div className="telem-header">TELEMETRY</div>
         <div className="telem-grid">
           <TelemRow label="TIME" value={<LiveClock />} />
