@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './Hero.css';
 
 export default function Hero() {
@@ -20,6 +20,7 @@ export default function Hero() {
 
       {/* Center: Identity block */}
       <div className="hero-identity hero-identity--visible">
+        <div className="hero-identity-bg" aria-hidden="true" />
         <div className="hero-sub-label">&#47;&#47; DEBAJIT DUTTA</div>
         <h1 className="hero-name" aria-label="ARISTRO">
           ARISTRO<span className="hero-dot" aria-hidden="true">.</span>
@@ -44,14 +45,7 @@ export default function Hero() {
           <TelemRow label="POWER" value={<PowerBar />} />
         </div>
         <div className="telem-divider" aria-hidden="true" />
-        <div className="telem-live">
-          <div className="telem-label">LIVE FEED</div>
-          <WaveformBar />
-          <div className="telem-now-playing">
-            <span className="telem-dim">Now Playing</span>
-            <span>Phonk Atmospheric // 08:45</span>
-          </div>
-        </div>
+        <TelemetryLiveFeed />
       </div>
 
       {/* Scroll hint */}
@@ -98,23 +92,115 @@ function PowerBar() {
   );
 }
 
-function WaveformBar() {
+function WaveformBar({ isPlaying }) {
   const bars = Array.from({ length: 28 }, (_, i) => ({
     h: 20 + Math.sin(i * 0.7) * 14 + Math.random() * 10,
     delay: i * 0.06
   }));
   return (
-    <div className="waveform" aria-hidden="true">
+    <div className={`waveform ${!isPlaying ? 'waveform--paused' : ''}`} aria-hidden="true">
       {bars.map((b, i) => (
         <div
           key={i}
           className="waveform-bar"
           style={{
-            height: `${b.h}%`,
-            animationDelay: `${b.delay}s`
+            height: isPlaying ? `${b.h}%` : '4px',
+            animationDelay: `${b.delay}s`,
+            animationPlayState: isPlaying ? 'running' : 'paused'
           }}
         />
       ))}
+    </div>
+  );
+}
+
+function TelemetryLiveFeed() {
+  const [presence, setPresence] = useState(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const audioRef = useRef(null);
+
+  // Set default Discord ID (user can change this in their Vercel env or code)
+  const DISCORD_USER_ID = process.env.REACT_APP_DISCORD_ID || "411910609386340362"; 
+
+  useEffect(() => {
+    if (!DISCORD_USER_ID) return;
+    const fetchStatus = () => {
+      fetch(`https://api.lanyard.rest/v1/users/${DISCORD_USER_ID}`)
+        .then(res => res.json())
+        .then(json => {
+          if (json.success) setPresence(json.data);
+        })
+        .catch(err => console.debug('Lanyard API offline or user not in Lanyard guild'));
+    };
+    fetchStatus();
+    const id = setInterval(fetchStatus, 8000);
+    return () => clearInterval(id);
+  }, [DISCORD_USER_ID]);
+
+  const toggleAudio = () => {
+    if (!audioRef.current) return;
+    if (isPlaying) {
+      audioRef.current.pause();
+    } else {
+      audioRef.current.play().catch(console.error);
+    }
+    setIsPlaying(!isPlaying);
+  };
+
+  const isSpotify = presence?.listening_to_spotify;
+  const spotify = presence?.spotify;
+  
+  const statusColor = {
+    online: 'var(--neon)',
+    idle: '#ffb300',
+    dnd: '#ff4d6d',
+    offline: '#555'
+  }[presence?.discord_status || 'offline'];
+
+  return (
+    <div className="telem-live">
+      <div className="telem-label" style={{ display: 'flex', justifyContent: 'space-between' }}>
+        <span>LIVE FEED</span>
+        <span style={{ color: statusColor, fontSize: '0.55rem', display: 'flex', alignItems: 'center', gap: '4px', fontWeight: 600 }}>
+          <span style={{ width: '5px', height: '5px', borderRadius: '50%', background: statusColor, display: 'inline-block' }} />
+          DC // {(presence?.discord_status || 'OFFLINE').toUpperCase()}
+        </span>
+      </div>
+
+      <div onClick={toggleAudio} style={{ cursor: 'pointer' }} title="Click to play/pause background music">
+        <WaveformBar isPlaying={isPlaying || isSpotify} />
+      </div>
+
+      <div className="telem-now-playing">
+        {isSpotify ? (
+          <>
+            <span className="telem-dim">LISTENING ON SPOTIFY:</span>
+            <span style={{ color: 'var(--neon)', fontWeight: 600, fontSize: '0.72rem', textTransform: 'uppercase' }}>{spotify.song}</span>
+            <span className="telem-dim">by {spotify.artist}</span>
+          </>
+        ) : isPlaying ? (
+          <>
+            <span className="telem-dim">AMBIENT AUDIO:</span>
+            <span style={{ color: 'var(--neon)', fontWeight: 600, fontSize: '0.72rem' }}>PHONK ATMOSPHERIC</span>
+            <span className="telem-dim">Click waveforms to pause</span>
+          </>
+        ) : (
+          <>
+            <span className="telem-dim">AUDIO SYSTEM:</span>
+            <span>SYSTEM CALM // NO FEED</span>
+            <span className="telem-dim" onClick={toggleAudio} style={{ textDecoration: 'underline', cursor: 'pointer' }}>
+              Click to load ambient audio
+            </span>
+          </>
+        )}
+      </div>
+
+      <audio 
+        ref={audioRef} 
+        src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3" 
+        loop 
+        preload="none"
+      />
     </div>
   );
 }

@@ -6,7 +6,13 @@ export default function Footer() {
   return (
     <footer className="footer" role="contentinfo">
       <div className="footer-left">
-        <span>© {year} ARISTRO</span>
+        <span 
+          onDoubleClick={() => window.location.href = '/admin'} 
+          style={{ cursor: 'default', userSelect: 'none' }}
+          title="System Core"
+        >
+          © {year} ARISTRO
+        </span>
       </div>
       <div className="footer-center">
         <span>BUILT WITH <span className="footer-heart" aria-label="love">♥</span> AND LOTS OF COFFEE</span>

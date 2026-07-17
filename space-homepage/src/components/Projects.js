@@ -34,6 +34,13 @@ export default function Projects() {
         <div className="projects-bento" role="list">
           {projects.map((p) => (
             <article key={p.id} className="project-card card" role="listitem">
+              {p.image_url && (
+                <div 
+                  className="project-card-img" 
+                  style={{ backgroundImage: `url(${p.image_url})` }} 
+                  aria-hidden="true"
+                />
+              )}
               <div className="project-card-top">
                 <span className="project-id">{String(p.order_num).padStart(2,'0')}</span>
                 <span className={`badge ${STATUS_CLASS[p.status] || 'badge-archived'}`}>{p.status}</span>

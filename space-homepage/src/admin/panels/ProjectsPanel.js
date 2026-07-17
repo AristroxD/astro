@@ -3,7 +3,7 @@ import { getProjects, upsertProject, deleteProject } from '../../lib/db';
 import '../AdminDashboard.css';
 
 const STATUS_OPTS = ['ACTIVE','LIVE','WIP','ARCHIVED','ONGOING'];
-const EMPTY = { title:'', description:'', tags:'', category:'', status:'ACTIVE', link:'#' };
+const EMPTY = { title:'', description:'', tags:'', category:'', status:'ACTIVE', link:'#', image_url:'' };
 
 export default function ProjectsPanel() {
   const [projects, setProjects] = useState([]);
@@ -24,7 +24,7 @@ export default function ProjectsPanel() {
   useEffect(() => { load(); }, [load]);
 
   const openNew  = () => setEditing({ ...EMPTY });
-  const openEdit = (p) => setEditing({ ...p, tags: (p.tags||[]).join(', ') });
+  const openEdit = (p) => setEditing({ ...p, tags: (p.tags||[]).join(', '), image_url: p.image_url || '' });
   const closeModal = () => { setEditing(null); setMsg(null); };
 
   const handleSave = async () => {
@@ -40,6 +40,7 @@ export default function ProjectsPanel() {
         status:      editing.status,
         link:        editing.link || '#',
         order_num:   editing.order_num || projects.length + 1,
+        image_url:   editing.image_url || '',
       };
       await upsertProject(payload);
       setMsg({ type:'ok', text: editing.id ? 'Project updated.' : 'Project created.' });
@@ -127,6 +128,7 @@ export default function ProjectsPanel() {
                 </select>
               </div>
               <Field label="LINK"          value={editing.link}        onChange={v => setEditing(e=>({...e,link:v}))} placeholder="https://github.com/..." />
+              <Field label="IMAGE URL"     value={editing.image_url}   onChange={v => setEditing(e=>({...e,image_url:v}))} placeholder="/assets/earth.png or https://..." />
             </div>
             <div className="modal-footer">
               <button className="btn-cancel" onClick={closeModal}>CANCEL</button>
