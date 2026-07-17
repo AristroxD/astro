@@ -43,7 +43,7 @@ export default function Navbar() {
 
   return (
     <nav className="nav" role="navigation" aria-label="Main navigation">
-      <a href="#home" className="nav-logo" aria-label="ARISTRO home">ARISTRO</a>
+      <a href="#home" className="nav-logo" aria-label="ARISTROVERSE home">ARISTROVERSE</a>
 
       <ul className="nav-links">
         {NAV_ITEMS.map(({ label, href }) => (
