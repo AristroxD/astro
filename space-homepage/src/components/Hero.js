@@ -20,7 +20,7 @@ export default function Hero() {
 
       {/* Center: Identity block */}
       <div className="hero-identity hero-identity--visible">
-        <div className="hero-identity-bg" aria-hidden="true" />
+        <div className="hero-identity-bg" style={{ background: "url('/assets/earth.png') no-repeat center center", backgroundSize: 'cover' }} aria-hidden="true" />
         <div className="hero-sub-label">&#47;&#47; DEBAJIT DUTTA</div>
         <h1 className="hero-name" aria-label="ARISTRO">
           ARISTRO<span className="hero-dot" aria-hidden="true">.</span>
