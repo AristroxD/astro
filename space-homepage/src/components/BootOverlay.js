@@ -11,12 +11,8 @@ const BOOT_LINES = [
 export default function BootOverlay({ onComplete }) {
   const [rendered, setRendered] = useState([]);
   const [done, setDone] = useState(false);
-  const started = useRef(false);
-
   useEffect(() => {
-    if (started.current) return;
-    started.current = true;
-
+    setRendered([]);
     let cancelled = false;
     const timers = [];
 
