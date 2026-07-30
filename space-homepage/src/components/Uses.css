@@ -296,3 +296,42 @@
     border-left: none;
   }
 }
+
+/* Terminal Status Block */
+.term-status-block {
+  padding: 12px 16px 0;
+}
+.term-status-grid {
+  margin: 8px 0 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.term-status-row {
+  display: flex;
+  gap: 12px;
+  font-size: 0.78rem;
+  font-family: var(--font-mono);
+}
+.term-status-label {
+  color: var(--white-50);
+  min-width: 130px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.term-status-value {
+  color: var(--white);
+}
+.term-status-value.term-neon {
+  color: var(--neon);
+  font-weight: 600;
+}
+.term-status-value.term-dim {
+  color: var(--white-30);
+  font-size: 0.72rem;
+}
+.term-divider {
+  height: 1px;
+  background: var(--white-10);
+  margin: 8px 0;
+}

@@ -46,6 +46,19 @@ export default function Uses() {
             <span className="term-btn term-btn-green" />
             <span className="term-title">aristro@system: ~</span>
           </div>
+          <div className="term-status-block">
+            <div className="term-line"><span className="term-prompt">aristro@system:~$</span> <span className="term-cmd">status</span></div>
+            <div className="term-status-grid">
+              <StatusRow label="Name" value="Debajit Dutta (Aristro)" />
+              <StatusRow label="Status" value="Student" />
+              <StatusRow label="" value="BSc Computer Science" dim />
+              <StatusRow label="Location" value="Earth" />
+              <StatusRow label="Current Mission" value="Learn. Build. Share." />
+              <StatusRow label="System Status" value="Online" neon />
+              <StatusRow label="Energy" value="100% ⚡" neon />
+            </div>
+            <div className="term-divider" />
+          </div>
           <TerminalChat />
         </div>
 
@@ -96,6 +109,15 @@ function DeskVisual() {
         ))}
       </div>
       <div className="dv-mouse" />
+    </div>
+  );
+}
+
+function StatusRow({ label, value, neon, dim }) {
+  return (
+    <div className="term-status-row">
+      {label && <span className="term-status-label">{label}</span>}
+      <span className={`term-status-value${neon ? ' term-neon' : ''}${dim ? ' term-dim' : ''}`}>{value}</span>
     </div>
   );
 }
