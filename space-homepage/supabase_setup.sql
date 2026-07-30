@@ -26,6 +26,7 @@ create table if not exists journal (
   year        text,
   title       text not null,
   excerpt     text,
+  content     text,
   tags        text[] default '{}',
   read_time   text,
   created_at  timestamptz default now()
@@ -64,13 +65,44 @@ create table if not exists about (
   created_at  timestamptz default now()
 );
 
+-- ─── ROADMAP ITEMS ────────────────────────────
+create table if not exists roadmap_items (
+  id          uuid primary key default gen_random_uuid(),
+  category    text not null,
+  title       text not null,
+  status      text default 'PENDING',
+  order_num   int default 0,
+  created_at  timestamptz default now()
+);
+
+-- ─── COURSES ──────────────────────────────────
+create table if not exists courses (
+  id               uuid primary key default gen_random_uuid(),
+  title            text not null,
+  topic            text,
+  status           text default 'IN PROGRESS',
+  progress_percent int default 0,
+  order_num        int default 0,
+  created_at       timestamptz default now()
+);
+
+-- ─── ANNOUNCEMENTS / GOALS ────────────────────
+create table if not exists announcements (
+  id          uuid primary key default gen_random_uuid(),
+  text        text not null,
+  type        text default 'GOAL',
+  created_at  timestamptz default now()
+);
+
 -- ─── DISABLE RLS (personal site, anon key used for writes) ───
 alter table projects      disable row level security;
 alter table journal       disable row level security;
 alter table tools         disable row level security;
 alter table contact_links disable row level security;
 alter table about         disable row level security;
-
+alter table roadmap_items disable row level security;
+alter table courses       disable row level security;
+alter table announcements disable row level security;
 -- ─── SEED: PROJECTS ───────────────────────────
 insert into projects (order_num, title, description, tags, category, status, link) values
 (1, 'Terrain Generator', 'Procedural terrain generation using Perlin noise and WebGL.', array['Python','NumPy'], 'Systems', 'ACTIVE', '#'),
@@ -113,7 +145,7 @@ insert into contact_links (label, value, href, icon, order_num) values
 ('LINKEDIN',  'linkedin.com/in/aristro',  '#',                            '◈', 3),
 ('INSTAGRAM', '@aristro.exe',             '#',                            '◉', 4);
 
--- ─── SEED: ABOUT ──────────────────────────────
+-- ─── ABOUT ────────────────────────────────────
 insert into about (greeting, body1, body2, focus, interests, currently) values
 (
   'Hey, I''m Debajit Dutta.',
@@ -123,5 +155,21 @@ insert into about (greeting, body1, body2, focus, interests, currently) values
   'Space, Sci-Fi, Music, Productivity',
   'Learning Computer Graphics & Game Dev'
 );
+
+-- ─── SEED: ROADMAP ────────────────────────────
+insert into roadmap_items (category, title, status, order_num) values
+('Month 1', 'C Fundamentals Deep Dive', 'COMPLETED', 1),
+('Month 2', 'Functions, Arrays, Strings, Pointers', 'IN PROGRESS', 2),
+('Month 3', 'Advanced C & File I/O', 'PENDING', 3),
+('Month 4', 'Digital Systems & Boolean Logic', 'PENDING', 4);
+
+-- ─── SEED: COURSES ────────────────────────────
+insert into courses (title, topic, status, progress_percent, order_num) values
+('Complete Python Bootcamp', 'Python', 'IN PROGRESS', 45, 1),
+('Machine Learning A-Z', 'AI/ML', 'PENDING', 10, 2);
+
+-- ─── SEED: ANNOUNCEMENTS ──────────────────────
+insert into announcements (text, type) values
+('Currently grinding through Month 2 of the 4-Year B.Sc CS Roadmap. Mastering C Pointers!', 'GOAL');
 
 -- Done! All tables created and seeded.

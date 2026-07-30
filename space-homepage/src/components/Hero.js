@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import './Hero.css';
 
 export default function Hero() {
@@ -22,8 +22,8 @@ export default function Hero() {
       <div className="hero-identity hero-identity--visible">
         <div className="hero-identity-bg" style={{ background: "url('/assets/earth.png') no-repeat center center", backgroundSize: 'cover' }} aria-hidden="true" />
         <div className="hero-sub-label">&#47;&#47; DEBAJIT DUTTA</div>
-        <h1 className="hero-name" aria-label="ARISTRO">
-          ARISTRO<span className="hero-dot" aria-hidden="true">.</span>
+        <h1 className="hero-name" aria-label="aristro.DEV">
+          aristro<span className="hero-dot" aria-hidden="true">.</span>DEV
         </h1>
         <p className="hero-tagline">
           Computer Science Student<br />
@@ -119,22 +119,45 @@ function TelemetryLiveFeed() {
   const [isPlaying, setIsPlaying] = useState(false);
   const audioRef = useRef(null);
 
-  // Set default Discord ID (user can change this in their Vercel env or code)
   const DISCORD_USER_ID = process.env.REACT_APP_DISCORD_ID || "411910609386340362"; 
+  const wsRef = useRef(null);
 
   useEffect(() => {
     if (!DISCORD_USER_ID) return;
-    const fetchStatus = () => {
-      fetch(`https://api.lanyard.rest/v1/users/${DISCORD_USER_ID}`)
-        .then(res => res.json())
-        .then(json => {
-          if (json.success) setPresence(json.data);
-        })
-        .catch(err => console.debug('Lanyard API offline or user not in Lanyard guild'));
+
+    let heartbeatInterval;
+    const connect = () => {
+      const ws = new WebSocket("wss://api.lanyard.rest/socket");
+      wsRef.current = ws;
+
+      ws.onmessage = (event) => {
+        const msg = JSON.parse(event.data);
+        if (msg.op === 1) { // Hello
+          ws.send(JSON.stringify({ op: 2, d: { subscribe_to_id: DISCORD_USER_ID } }));
+          heartbeatInterval = setInterval(() => {
+            if (ws.readyState === WebSocket.OPEN) {
+              ws.send(JSON.stringify({ op: 3 }));
+            }
+          }, msg.d.heartbeat_interval);
+        } else if (msg.op === 0) { // Event
+          if (msg.t === "INIT_STATE" || msg.t === "PRESENCE_UPDATE") {
+            setPresence(msg.d);
+          }
+        }
+      };
+
+      ws.onclose = () => {
+        clearInterval(heartbeatInterval);
+        setTimeout(connect, 5000); // Reconnect after 5 seconds
+      };
     };
-    fetchStatus();
-    const id = setInterval(fetchStatus, 8000);
-    return () => clearInterval(id);
+
+    connect();
+
+    return () => {
+      if (wsRef.current) wsRef.current.close();
+      clearInterval(heartbeatInterval);
+    };
   }, [DISCORD_USER_ID]);
 
   const toggleAudio = () => {

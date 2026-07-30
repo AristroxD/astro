@@ -21,6 +21,10 @@ export default function Projects() {
       .finally(() => setLoading(false));
   }, []);
 
+  if (!loading && projects.length === 0) {
+    return null;
+  }
+
   return (
     <section id="projects" className="projects-section" aria-labelledby="projects-heading">
       <div className="projects-header">

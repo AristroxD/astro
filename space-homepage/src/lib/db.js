@@ -123,3 +123,51 @@ export async function upsertAbout(about) {
   if (error) throw error;
   return data;
 }
+
+/* ─── ROADMAP ITEMS ──────────────────────────── */
+export async function getRoadmapItems() {
+  const { data, error } = await supabase.from('roadmap_items').select('*').order('order_num', { ascending: true });
+  if (error) throw error;
+  return data;
+}
+export async function upsertRoadmapItem(item) {
+  const { data, error } = await supabase.from('roadmap_items').upsert(item, { onConflict: 'id' }).select().single();
+  if (error) throw error;
+  return data;
+}
+export async function deleteRoadmapItem(id) {
+  const { error } = await supabase.from('roadmap_items').delete().eq('id', id);
+  if (error) throw error;
+}
+
+/* ─── COURSES ────────────────────────────────── */
+export async function getCourses() {
+  const { data, error } = await supabase.from('courses').select('*').order('order_num', { ascending: true });
+  if (error) throw error;
+  return data;
+}
+export async function upsertCourse(course) {
+  const { data, error } = await supabase.from('courses').upsert(course, { onConflict: 'id' }).select().single();
+  if (error) throw error;
+  return data;
+}
+export async function deleteCourse(id) {
+  const { error } = await supabase.from('courses').delete().eq('id', id);
+  if (error) throw error;
+}
+
+/* ─── ANNOUNCEMENTS ──────────────────────────── */
+export async function getAnnouncements() {
+  const { data, error } = await supabase.from('announcements').select('*').order('created_at', { ascending: false });
+  if (error) throw error;
+  return data;
+}
+export async function upsertAnnouncement(ann) {
+  const { data, error } = await supabase.from('announcements').upsert(ann, { onConflict: 'id' }).select().single();
+  if (error) throw error;
+  return data;
+}
+export async function deleteAnnouncement(id) {
+  const { error } = await supabase.from('announcements').delete().eq('id', id);
+  if (error) throw error;
+}

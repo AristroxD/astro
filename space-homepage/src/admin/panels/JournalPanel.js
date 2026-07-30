@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { getJournal, upsertJournal, deleteJournal } from '../../lib/db';
 import '../AdminDashboard.css';
 
-const EMPTY = { date_str:'', year: new Date().getFullYear().toString(), title:'', excerpt:'', tags:'', read_time:'' };
+const EMPTY = { date_str:'', year: new Date().getFullYear().toString(), title:'', excerpt:'', content:'', tags:'', read_time:'' };
 
 export default function JournalPanel() {
   const [entries, setEntries] = useState([]);
@@ -34,6 +34,7 @@ export default function JournalPanel() {
         year:      editing.year,
         title:     editing.title,
         excerpt:   editing.excerpt,
+        content:   editing.content,
         tags:      editing.tags.split(',').map(t=>t.trim()).filter(Boolean),
         read_time: editing.read_time,
       };
@@ -112,6 +113,7 @@ export default function JournalPanel() {
               </div>
               <Field label="TITLE *"              value={editing.title}    onChange={v=>setEditing(e=>({...e,title:v}))} />
               <Field label="EXCERPT"              value={editing.excerpt}  onChange={v=>setEditing(e=>({...e,excerpt:v}))} textarea />
+              <Field label="FULL CONTENT"         value={editing.content}  onChange={v=>setEditing(e=>({...e,content:v}))} textarea rows={8} />
               <Field label="TAGS (comma-separated)" value={editing.tags}  onChange={v=>setEditing(e=>({...e,tags:v}))} placeholder="Python, OpenGL" />
               <Field label="READ TIME"            value={editing.read_time} onChange={v=>setEditing(e=>({...e,read_time:v}))} placeholder="6 MIN" />
             </div>
@@ -128,12 +130,12 @@ export default function JournalPanel() {
   );
 }
 
-function Field({ label, value, onChange, textarea, placeholder }) {
+function Field({ label, value, onChange, textarea, placeholder, rows = 3 }) {
   return (
     <div className="form-group">
       <label className="form-label">{label}</label>
       {textarea
-        ? <textarea className="form-textarea" value={value||''} onChange={e=>onChange(e.target.value)} placeholder={placeholder} rows={3} />
+        ? <textarea className="form-textarea" value={value||''} onChange={e=>onChange(e.target.value)} placeholder={placeholder} rows={rows} />
         : <input    className="form-input"    value={value||''} onChange={e=>onChange(e.target.value)} placeholder={placeholder} />
       }
     </div>

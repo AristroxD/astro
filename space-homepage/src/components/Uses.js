@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './Uses.css';
 import { getTools } from '../lib/db';
-
+import TerminalChat from './TerminalChat';
 const DEFAULT_TOOLS = {
   system:   [{ label:'OS', value:'Windows 11' },{ label:'CPU', value:'Intel i5-12400F' },{ label:'GPU', value:'RTX 3060' },{ label:'RAM', value:'16GB DDR4' },{ label:'EDITOR', value:'VS Code' },{ label:'SHELL', value:'PowerShell' }],
   software: [{ label:'VS Code' },{ label:'Blender' },{ label:'Figma' },{ label:'DaVinci' },{ label:'Photoshop' }],
@@ -46,7 +46,7 @@ export default function Uses() {
             <span className="term-btn term-btn-green" />
             <span className="term-title">aristro@system: ~</span>
           </div>
-          <TerminalContent />
+          <TerminalChat />
         </div>
 
         <div className="uses-software card" aria-label="Software tools">
@@ -74,40 +74,6 @@ export default function Uses() {
   );
 }
 
-function TerminalContent() {
-  return (
-    <div className="term-body" aria-live="polite">
-      <div className="term-line">
-        <span className="term-prompt">aristro@system:~$</span>&nbsp;
-        <span className="term-cmd">whoami</span>
-      </div>
-      <div className="term-line term-output">Debajit Dutta (Aristro)</div>
-      <div className="term-line">
-        <span className="term-prompt">aristro@system:~$</span>&nbsp;
-        <span className="term-cmd">status</span>
-      </div>
-      <div className="term-table">
-        {[
-          ['Student',         'BSc Computer Science'],
-          ['Location',        'Earth'],
-          ['Current Mission', 'Learn. Build. Share.'],
-          ['System Status',   'Online'],
-          ['Energy',          '100% ⚡'],
-        ].map(([k, v]) => (
-          <div key={k} className="term-table-row">
-            <span className="term-key">{k}</span>
-            <span className="term-val">{v}</span>
-          </div>
-        ))}
-      </div>
-      <div className="term-line">
-        <span className="term-prompt">aristro@system:~$</span>&nbsp;
-        <span className="term-cmd">_</span>
-        <span className="term-cursor" aria-hidden="true">█</span>
-      </div>
-    </div>
-  );
-}
 
 
 function DeskVisual() {
