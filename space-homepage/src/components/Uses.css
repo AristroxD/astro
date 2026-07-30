@@ -169,11 +169,11 @@
 /* Terminal */
 .uses-terminal {
   grid-column: 3;
-  grid-row: 1;
+  grid-row: 1 / 3;
   border-left: 1px solid var(--border-dim);
   display: flex;
   flex-direction: column;
-  max-height: 260px;
+  min-height: 420px;
 }
 
 .terminal-titlebar {
@@ -290,7 +290,7 @@
 
 @media (max-width: 600px) {
   .uses-grid { grid-template-columns: 1fr; }
-  .uses-terminal { max-height: 220px; }
+  .uses-terminal { min-height: 350px; }
   .uses-desk, .uses-terminal, .uses-software, .uses-hardware {
     grid-column: 1;
     border-left: none;

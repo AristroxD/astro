@@ -48,7 +48,7 @@ export default function TerminalChat() {
   };
 
   return (
-    <div className="term-body" style={{ maxHeight: '320px', overflowY: 'auto' }} ref={scrollRef}>
+    <div className="term-body" style={{ flex: 1, overflowY: 'auto' }} ref={scrollRef}>
       {messages.map((m, i) => (
         <div key={i} className="term-line" style={{ marginBottom: '12px' }}>
           {m.role === 'user' ? (
