@@ -7,6 +7,7 @@ const NAV_ITEMS = [
   { label: 'Journal',  href: '#journal' },
   { label: 'About',    href: '#about' },
   { label: 'Uses',     href: '#uses' },
+  { label: 'Tracker',  href: 'https://aristro.ai.studio', external: true },
   { label: 'Contact',  href: '#contact' },
 ];
 
@@ -46,14 +47,16 @@ export default function Navbar() {
       <a href="#home" className="nav-logo" aria-label="ARISTROVERSE home">ARISTROVERSE</a>
 
       <ul className="nav-links">
-        {NAV_ITEMS.map(({ label, href }) => (
+        {NAV_ITEMS.map(({ label, href, external }) => (
           <li key={href}>
             <a
               href={href}
-              className={active === href.slice(1) ? 'nav-link active' : 'nav-link'}
-              aria-current={active === href.slice(1) ? 'page' : undefined}
+              className={!external && active === href.slice(1) ? 'nav-link active' : 'nav-link'}
+              aria-current={!external && active === href.slice(1) ? 'page' : undefined}
+              {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
             >
               {label.toUpperCase()}
+              {external && <span className="nav-external-icon" aria-hidden="true"> ↗</span>}
             </a>
           </li>
         ))}

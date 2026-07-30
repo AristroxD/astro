@@ -79,7 +79,7 @@
   grid-column: 1 / -1;
   grid-row: 2;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 0;
   border-top: 1px solid var(--border-dim);
 }
@@ -91,6 +91,42 @@
 }
 .about-stat-col:last-child { border-right: none; }
 .about-stat-col:hover { background: var(--neon-glow); }
+
+/* Tracker link card */
+.about-tracker-link {
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  cursor: pointer;
+  position: relative;
+  background: rgba(57,255,183,0.03);
+  border-left: 2px solid rgba(57,255,183,0.25);
+  transition: background 0.25s, border-color 0.25s;
+}
+.about-tracker-link:hover {
+  background: rgba(57,255,183,0.08);
+  border-left-color: var(--neon);
+}
+.about-tracker-link .stat-label {
+  color: var(--neon);
+}
+.about-tracker-link .stat-value {
+  color: var(--white-60);
+}
+.tracker-cta {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.16em;
+  color: var(--neon);
+  text-transform: uppercase;
+  margin-top: 4px;
+  opacity: 0.6;
+  transition: opacity 0.2s;
+}
+.about-tracker-link:hover .tracker-cta {
+  opacity: 1;
+}
 
 .stat-label {
   font-size: 0.58rem;
@@ -116,4 +152,5 @@
   .about-intro { grid-column: 1; border-left: none; border-top: 1px solid var(--border-dim); }
   .about-stats { grid-template-columns: 1fr; }
   .about-stat-col { border-right: none; border-bottom: 1px solid var(--border-dim); }
+  .about-tracker-link { border-left: none; border-top: 2px solid rgba(57,255,183,0.25); }
 }

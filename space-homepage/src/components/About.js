@@ -54,6 +54,17 @@ export default function About() {
             <div className="stat-label">CURRENTLY</div>
             <div className="stat-value">{about.currently}</div>
           </div>
+          <a
+            href="https://aristro.ai.studio"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="about-stat-col about-tracker-link"
+            aria-label="View Academic Tracker"
+          >
+            <div className="stat-label">ACADEMIC TRACKER</div>
+            <div className="stat-value">Track my learning progress, courses & roadmap in real-time</div>
+            <span className="tracker-cta">&gt; OPEN TRACKER ↗</span>
+          </a>
         </div>
       </div>
     </section>
